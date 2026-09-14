@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
 import TechGrid from "./components/TechGrid.jsx";
+import StackSidebar from "./components/StackSidebar.jsx";
 
 function App() {
   const [techData, setTechData] = useState([]);
@@ -34,6 +35,17 @@ function App() {
     toast.success(`${tech.name} added to your stack!`);
   };
 
+  const handleRemove = (id) => {
+    const removed = stack.find((item) => item.id === id);
+    setStack((prev) => prev.filter((item) => item.id !== id));
+    if (removed) toast.warn(`${removed.name} removed from your stack.`);
+  };
+
+  const handleRemoveAll = () => {
+    setStack([]);
+    toast.warn("Your stack has been cleared.");
+  };
+
   return (
     <div className="page-shell">
       <Header />
@@ -48,7 +60,13 @@ function App() {
           techList={techData}
           stack={stack}
           onAddToStack={handleAddToStack}
-          sidebar={null}
+          sidebar={
+            <StackSidebar
+              stack={stack}
+              onRemove={handleRemove}
+              onRemoveAll={handleRemoveAll}
+            />
+          }
         />
       )}
 
