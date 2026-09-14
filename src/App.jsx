@@ -9,42 +9,38 @@ import StackSidebar from "./components/StackSidebar.jsx";
 import Footer from "./components/Footer.jsx";
 
 function App() {
-  const [techData, setTechData] = useState([]);
+  const [techList, setTechList] = useState([]);
   const [stack, setStack] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
+  // load the technology data once, from public/data so nothing is hardcoded
   useEffect(() => {
     fetch("/data/techData.json")
       .then((res) => res.json())
-      .then((data) => {
-        setTechData(data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to load tech data:", err);
-        setIsLoading(false);
-      });
+      .then((data) => setTechList(data))
+      .catch((err) => console.error("Failed to load tech data:", err))
+      .finally(() => setLoading(false));
   }, []);
 
-  const handleAddToStack = (tech) => {
-    const alreadyAdded = stack.some((item) => item.id === tech.id);
-    if (alreadyAdded) {
-      toast.info(`${tech.name} is already in your stack.`);
+  const addToStack = (tech) => {
+    const isDuplicate = stack.some((item) => item.id === tech.id);
+    if (isDuplicate) {
+      toast.warning(`${tech.name} is already in your stack.`);
       return;
     }
     setStack((prev) => [...prev, tech]);
     toast.success(`${tech.name} added to your stack!`);
   };
 
-  const handleRemove = (id) => {
-    const removed = stack.find((item) => item.id === id);
-    setStack((prev) => prev.filter((item) => item.id !== id));
-    if (removed) toast.warn(`${removed.name} removed from your stack.`);
+  const removeFromStack = (id) => {
+    const item = stack.find((t) => t.id === id);
+    setStack((prev) => prev.filter((t) => t.id !== id));
+    if (item) toast.info(`${item.name} removed from your stack.`);
   };
 
-  const handleRemoveAll = () => {
+  const clearStack = () => {
     setStack([]);
-    toast.warn("Your stack has been cleared.");
+    toast.info("Your stack has been cleared.");
   };
 
   return (
@@ -52,21 +48,18 @@ function App() {
       <Header />
       <Hero />
 
-      {isLoading ? (
-        <p className="text-center text-gray-400 py-20">
-          Loading technologies...
-        </p>
+      {loading ? (
+        <div className="flex flex-col gap-3 items-center py-24">
+          <div className="w-8 h-8 border-2 border-gray-200 border-t-gray-900 rounded-full animate-spin" />
+          <p className="text-sm text-gray-400">Loading technologies...</p>
+        </div>
       ) : (
         <TechGrid
-          techList={techData}
+          techList={techList}
           stack={stack}
-          onAddToStack={handleAddToStack}
+          onAddToStack={addToStack}
           sidebar={
-            <StackSidebar
-              stack={stack}
-              onRemove={handleRemove}
-              onRemoveAll={handleRemoveAll}
-            />
+            <StackSidebar stack={stack} onRemove={removeFromStack} onRemoveAll={clearStack} />
           }
         />
       )}

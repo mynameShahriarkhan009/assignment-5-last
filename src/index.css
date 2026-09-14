@@ -11,6 +11,8 @@ body {
   color: #1a1a1a;
 }
 
+/* brand gradient (Orange -> Pink -> Violet), change the stops here
+   and it updates everywhere it's used: brand name, hero heading, primary buttons */
 .text-gradient {
   background: linear-gradient(90deg, #f97316 0%, #ec4899 55%, #a855f7 100%);
   -webkit-background-clip: text;

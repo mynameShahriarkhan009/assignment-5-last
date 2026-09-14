@@ -1,7 +1,7 @@
 import TechCard from "./TechCard.jsx";
 
 export default function TechGrid({ techList, stack, onAddToStack, sidebar }) {
-  const stackIds = stack.map((item) => item.id);
+  const addedIds = stack.map((item) => item.id);
 
   return (
     <section id="technologies" className="max-w-[1400px] mx-auto px-10 pb-24">
@@ -12,19 +12,19 @@ export default function TechGrid({ techList, stack, onAddToStack, sidebar }) {
         Pick one technology per category to build your ideal stack.
       </p>
 
-      <div className="flex gap-5 mt-8 items-start">
-        <div className="grid grid-cols-3 gap-5 flex-1">
+      <div className="flex items-start gap-5 mt-8">
+        <div className="flex-1 grid grid-cols-3 gap-5">
           {techList.map((tech) => (
             <TechCard
               key={tech.id}
               tech={tech}
-              isAdded={stackIds.includes(tech.id)}
+              isAdded={addedIds.includes(tech.id)}
               onAdd={onAddToStack}
             />
           ))}
         </div>
 
-        <div className="w-[280px] shrink-0 sticky top-6">{sidebar}</div>
+        <div className="w-[280px] shrink-0 sticky top-24">{sidebar}</div>
       </div>
     </section>
   );

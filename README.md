@@ -1,16 +1,40 @@
-# React + Vite
+# Dev Stack — Build Your Ideal Development Stack
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+একটা React + Tailwind CSS ওয়েবসাইট, যেখানে ইউজার ফ্রন্টএন্ড, ব্যাকএন্ড, ডেটাবেজ, ল্যাঙ্গুয়েজ, স্টাইলিং আর ডেভঅপস — বিভিন্ন ক্যাটাগরির টেকনোলজি দেখতে পারে, প্রতিটার শর্ট ডেসক্রিপশন, রেটিং আর ডিফিকাল্টি লেভেল দেখে যেটা পছন্দ সেটা "Add to Stack" করে নিজের একটা কাস্টম স্ট্যাক বানাতে পারে। সব টেকনোলজি ডেটা একটা JSON ফাইল থেকে ফেচ করে আনা হয়, কোনোটাই কম্পোনেন্টে হার্ডকোড করা নেই।
 
-Currently, two official plugins are available:
+## ব্যবহৃত টেকনোলজি
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** (Vite দিয়ে বানানো)
+- **Tailwind CSS v4** — পুরো সাইটের স্টাইলিং এর জন্য
+- **react-toastify** — অ্যাড/রিমুভ/ডুপ্লিকেট অ্যাকশনে নোটিফিকেশন দেখানোর জন্য
+- **JavaScript (ES6+)** — hooks, array methods (`.map`, `.some`, `.filter`) ইত্যাদি
+- **JSON** — `public/data/techData.json` থেকে টেকনোলজি ডেটা fetch করা হয়
 
-## React Compiler
+## সেরা ৩টি ফিচার
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Add to Stack সিস্টেম** — একই টেকনোলজি দুইবার অ্যাড করা যায় না, চেষ্টা করলে ওয়ার্নিং টোস্ট দেখায়। অ্যাড হয়ে গেলে কার্ডের বাটন ডিজেবল হয়ে "✓ Added to Stack" দেখায়।
+2. **ডেটা-ড্রিভেন টেকনোলজি কার্ড** — `TechGrid` আর `TechCard` কম্পোনেন্ট JSON থেকে আসা ডেটা দিয়ে ডায়নামিকভাবে রেন্ডার হয়, তাই নতুন টেকনোলজি যোগ করতে শুধু JSON ফাইলে একটা অবজেক্ট বসালেই হবে, কোড টাচ করতে হবে না।
+3. **এক জায়গায় থিম কন্ট্রোল** — `index.css`-এ একটাই গ্রেডিয়েন্ট ক্লাস (`.text-gradient` / `.btn-gradient`) ডিফাইন করা, এটা ব্র্যান্ড নাম, হিরো হেডিং আর প্রাইমারি বাটন সব জায়গায় ইউজ হয়েছে — কালার বদলাতে চাইলে ঐ একটা জায়গায় হাত দিলেই পুরো সাইট বদলে যাবে।
 
-## Expanding the Oxlint configuration
+## React রিলেটেড প্রশ্নের উত্তর
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+**১. JSX কী এবং রিঅ্যাক্টে এটি কেন ব্যবহার করা হয়?**
+JSX হলো JavaScript এর ভেতরে HTML-এর মতো সিনট্যাক্স লেখার একটা উপায়। এটা আসলে `React.createElement()` কলে কম্পাইল হয়ে যায় পেছনে। আমরা ব্যবহার করি কারণ এতে UI আর লজিক একই ফাইলে, পড়তে-লিখতে সহজ হয় — যেমন `TechCard.jsx`-এ আমি সরাসরি `<div>`, `<img>`, `{tech.name}` এভাবে লিখেছি, কিন্তু ভেতরে ভেতরে এটা জাভাস্ক্রিপ্ট অবজেক্টেই কনভার্ট হচ্ছে।
+
+**২. `props` এবং `state`-এর মধ্যে মূল পার্থক্য কী?**
+`props` হলো প্যারেন্ট থেকে চাইল্ডে পাঠানো ডেটা, এটা চাইল্ড কম্পোনেন্ট নিজে বদলাতে পারে না (read-only)। `state` হলো কম্পোনেন্টের নিজস্ব ডেটা, যেটা সেই কম্পোনেন্ট নিজেই বদলাতে পারে এবং বদলালে রি-রেন্ডার হয়। যেমন `App.jsx`-এ `stack` একটা state, আর সেটাই আমি `StackSidebar`-এ props হিসেবে পাঠাই।
+
+**৩. `useState` হুক কী কাজ করে এবং এই প্রজেক্টে আপনি এটি কোথায় ব্যবহার করেছেন?**
+`useState` একটা ভ্যালু আর সেই ভ্যালু আপডেট করার একটা ফাংশন রিটার্ন করে, আর ভ্যালু বদলালে কম্পোনেন্ট আবার রেন্ডার হয়। এই প্রজেক্টে আমি তিনটা state ব্যবহার করেছি `App.jsx`-এ — `techList` (JSON থেকে আসা ডেটা), `stack` (ইউজারের সিলেক্ট করা টেকনোলজিগুলো), আর `loading` (ডেটা fetch হচ্ছে কিনা সেটা ট্র্যাক করতে)।
+
+**৪. `useEffect` হুক কী করে এবং JSON ডেটা লোড করার জন্য এটি কেন প্রয়োজন হয়েছিল?**
+`useEffect` কম্পোনেন্ট রেন্ডার হওয়ার পর একটা সাইড-ইফেক্ট চালায় — যেমন API কল, fetch, বা কোনো ইভেন্ট লিসেনার সেট করা। JSX রেন্ডার করার সময় সরাসরি fetch কল করা যায় না, তাই আমি `useEffect(() => {...}, [])` দিয়ে কম্পোনেন্ট প্রথমবার মাউন্ট হওয়ার পর `techData.json` ফেচ করি এবং `techList` state-এ বসাই। খালি dependency array (`[]`) দেওয়ার মানে এটা শুধু একবারই চলবে, প্রতি রেন্ডারে না।
+
+**৫. `.map()` দিয়ে লিস্ট তৈরি করার সময় কেন প্রতিটি আইটেমে ইউনিক `key` প্রপ দিতে হয়?**
+React `key` দিয়ে বুঝতে পারে লিস্টের কোন আইটেমটা নতুন যোগ হলো, কোনটা রিমুভ হলো, বা কোনটার পজিশন বদলালো — এতে সে পুরো লিস্ট আবার না বানিয়ে শুধু যেটুকু বদলেছে সেটুকুই আপডেট করে, পারফরম্যান্স ভালো থাকে আর বাগও কম হয়। আমি `TechGrid`-এ প্রতিটা `TechCard`-এ `tech.id` কে key হিসেবে দিয়েছি, index না দিয়ে, কারণ id সবসময় একই টেকনোলজির জন্য ইউনিক থাকে।
+
+**৬. Conditional Rendering কী? এই প্রজেক্টে আপনি এটি কোথায় ব্যবহার করেছেন (যেমন: Empty Stack মেসেজ)?**
+Conditional rendering মানে কোনো একটা কন্ডিশনের ওপর ভিত্তি করে ভিন্ন ভিন্ন UI দেখানো। এই প্রজেক্টে আমি এটা কয়েক জায়গায় ব্যবহার করেছি — `App.jsx`-এ `loading` true থাকলে স্পিনার দেখায়, না হলে `TechGrid` দেখায়। আর `StackSidebar.jsx`-এ `stack.length === 0` হলে "Your stack is empty." মেসেজ দেখায়, নাহলে আইটেমগুলোর লিস্ট আর "Remove All" বাটন দেখায়।
+
+**৭. Parent কম্পোনেন্ট থেকে Child কম্পোনেন্টে কীভাবে ডেটা পাঠানো হয় এবং Child কীভাবে Parent-এ তথ্য পাঠায়?**
+Parent থেকে Child-এ ডেটা যায় props এর মাধ্যমে — যেমন `App.jsx` থেকে `techList` আর `stack` props হিসেবে `TechGrid`-এ পাঠানো হয়। উল্টোদিকে Child থেকে Parent-এ তথ্য পাঠাতে হলে Parent একটা ফাংশন props হিসেবে Child-কে দেয়, আর Child সেই ফাংশনটা কল করে। যেমন `App.jsx`-এর `addToStack` ফাংশনটা `onAddToStack` প্রপ হিসেবে `TechCard` পর্যন্ত যায়, আর বাটনে ক্লিক করলে `TechCard` সেই ফাংশন কল করে ফলে Parent-এর `stack` state আপডেট হয়।
