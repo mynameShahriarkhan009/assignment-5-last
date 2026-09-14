@@ -6,6 +6,7 @@ import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
 import TechGrid from "./components/TechGrid.jsx";
 import StackSidebar from "./components/StackSidebar.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   const [techData, setTechData] = useState([]);
@@ -70,6 +71,7 @@ function App() {
         />
       )}
 
+      <Footer />
       <ToastContainer position="top-right" autoClose={2500} />
     </div>
   );
